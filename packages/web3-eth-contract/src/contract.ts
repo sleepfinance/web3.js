@@ -15,91 +15,91 @@ You should have received a copy of the GNU Lesser General Public License
 along with web3.js.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-import { Web3Context, Web3EventEmitter, Web3PromiEvent, Web3ConfigEvent } from 'web3-core';
+import { Web3ConfigEvent, Web3Context, Web3EventEmitter, Web3PromiEvent } from 'web3-core';
 import {
-	ContractExecutionError,
-	ContractTransactionDataAndInputError,
-	SubscriptionError,
-	Web3ContractError,
+    ContractExecutionError,
+    ContractTransactionDataAndInputError,
+    SubscriptionError,
+    Web3ContractError,
 } from 'web3-errors';
 import {
-	createAccessList,
-	call,
-	estimateGas,
-	getLogs,
-	NewHeadsSubscription,
-	sendTransaction,
-	SendTransactionEvents,
+    NewHeadsSubscription,
+    SendTransactionEvents,
+    call,
+    createAccessList,
+    estimateGas,
+    getLogs,
+    sendTransaction,
 } from 'web3-eth';
 import {
-	encodeEventSignature,
-	encodeFunctionSignature,
-	decodeContractErrorData,
-	isAbiErrorFragment,
-	isAbiEventFragment,
-	isAbiFunctionFragment,
-	jsonInterfaceMethodToString,
+    decodeContractErrorData,
+    encodeEventSignature,
+    encodeFunctionSignature,
+    isAbiErrorFragment,
+    isAbiEventFragment,
+    isAbiFunctionFragment,
+    jsonInterfaceMethodToString,
 } from 'web3-eth-abi';
 import {
-	AbiConstructorFragment,
-	AbiErrorFragment,
-	AbiEventFragment,
-	AbiFragment,
-	AbiFunctionFragment,
-	ContractAbi,
-	ContractConstructorArgs,
-	ContractEvent,
-	ContractEvents,
-	ContractMethod,
-	ContractMethodInputParameters,
-	ContractMethodOutputParameters,
-	Address,
-	BlockNumberOrTag,
-	BlockTags,
-	Bytes,
-	EthExecutionAPI,
-	Filter,
-	FilterAbis,
-	HexString,
-	LogsInput,
-	Mutable,
-	ContractInitOptions,
-	NonPayableCallOptions,
-	PayableCallOptions,
-	DataFormat,
-	DEFAULT_RETURN_FORMAT,
-	Numbers,
-	Web3ValidationErrorObject,
+    AbiConstructorFragment,
+    AbiErrorFragment,
+    AbiEventFragment,
+    AbiFragment,
+    AbiFunctionFragment,
+    Address,
+    BlockNumberOrTag,
+    BlockTags,
+    Bytes,
+    ContractAbi,
+    ContractConstructorArgs,
+    ContractEvent,
+    ContractEvents,
+    ContractInitOptions,
+    ContractMethod,
+    ContractMethodInputParameters,
+    ContractMethodOutputParameters,
+    DEFAULT_RETURN_FORMAT,
+    DataFormat,
+    EthExecutionAPI,
+    Filter,
+    FilterAbis,
+    HexString,
+    LogsInput,
+    Mutable,
+    NonPayableCallOptions,
+    Numbers,
+    PayableCallOptions,
+    Web3ValidationErrorObject,
 } from 'web3-types';
 import { format, isDataFormat, keccak256, toChecksumAddress } from 'web3-utils';
 import {
-	isNullish,
-	validator,
-	utils as validatorUtils,
-	ValidationSchemaInput,
-	Web3ValidatorError,
+    ValidationSchemaInput,
+    Web3ValidatorError,
+    isNullish,
+    validator,
+    utils as validatorUtils,
 } from 'web3-validator';
 import { ALL_EVENTS_ABI } from './constants.js';
 import { decodeEventABI, decodeMethodReturn, encodeEventABI, encodeMethodABI } from './encoding.js';
 import { LogsSubscription } from './log_subscription.js';
 import {
-	ContractAbiWithSignature,
-	ContractEventOptions,
-	ContractOptions,
-	EventLog,
-	NonPayableMethodObject,
-	NonPayableTxOptions,
-	PayableMethodObject,
-	PayableTxOptions,
-	Web3ContractContext,
+    ContractAbiWithSignature,
+    ContractEventOptions,
+    ContractOptions,
+    EventLog,
+    NonPayableMethodObject,
+    NonPayableTxOptions,
+    PayableMethodObject,
+    PayableTxOptions,
+    Web3ContractContext,
 } from './types.js';
 import {
-	getCreateAccessListParams,
-	getEstimateGasParams,
-	getEthTxCallParams,
-	getSendTxParams,
-	isContractInitOptions,
-	isWeb3ContractContext,
+    getCreateAccessListParams,
+    getEstimateGasParams,
+    getEthTxCallParams,
+    getSendTxParams,
+    isContractInitOptions,
+    isWeb3ContractContext,
 } from './utils.js';
 
 type ContractBoundMethod<
@@ -595,6 +595,7 @@ export class Contract<Abi extends ContractAbi>
 		const contractOptions: ContractOptions = { ...this.options, input: _input };
 
 		return {
+            
 			arguments: args,
 			send: (
 				options?: PayableTxOptions,
@@ -951,6 +952,8 @@ export class Contract<Abi extends ContractAbi>
 						options,
 						block,
 					),
+                decodeABI:(returnValues:any)=>decodeMethodReturn(methodAbi, returnValues),
+                parent:this
 			};
 
 			if (methodAbi.stateMutability === 'payable') {
